@@ -90,7 +90,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
 
         <div className="flex flex-wrap gap-1 mb-4">
           {Array.isArray(article.hashtags) &&
-          {article.hashtags.slice(0, 4).map((hashtag, index) => (
+          article.hashtags.slice(0, 4).map((hashtag, index) => (
             <span 
               key={index}
               className="text-xs text-blue-400 bg-blue-400/10 px-2 py-1 rounded-full flex items-center space-x-1"
@@ -98,7 +98,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
               <Hash className="h-2 w-2" />
               <span>{hashtag.replace('#', '')}</span>
             </span>
-          ))}
+          ))
           }
         </div>
 
