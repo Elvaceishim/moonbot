@@ -6,10 +6,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const twitterClient = new TwitterApi({
-  appKey: import.meta.env.VITE_TWITTER_API_KEY!,
-  appSecret: import.meta.env.VITE_TWITTER_API_SECRET!,
-  accessToken: import.meta.env.VITE_TWITTER_ACCESS_TOKEN!,
-  accessSecret: import.meta.env.VITE_TWITTER_ACCESS_SECRET!
+  appKey: process.env.VITE_TWITTER_API_KEY!,
+  appSecret: process.env.VITE_TWITTER_API_SECRET!,
+  accessToken: process.env.VITE_TWITTER_ACCESS_TOKEN!,
+  accessSecret: process.env.VITE_TWITTER_ACCESS_SECRET!,
 });
 
 const postedArticles = new Set<string>(); // In production, replace this with persistent storage
