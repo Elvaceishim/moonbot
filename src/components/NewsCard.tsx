@@ -12,7 +12,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
     const now = new Date();
     const publishTime = new Date(dateString);
     const diffInMinutes = Math.floor((now.getTime() - publishTime.getTime()) / (1000 * 60));
-    
+
     if (diffInMinutes < 60) {
       return `${diffInMinutes}m ago`;
     } else if (diffInMinutes < 1440) {
@@ -45,7 +45,12 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
   };
 
   return (
-    <div className={`bg-slate-800 rounded-lg border-l-4 ${getSentimentColor(article.sentiment)} hover:bg-slate-700/50 transition-all duration-200 group`}>
+    <a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`block bg-slate-800 rounded-lg border-l-4 ${getSentimentColor(article.sentiment)} hover:bg-slate-700/50 transition-all duration-200 group`}
+    >
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-2">
@@ -68,7 +73,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
         <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-blue-300 transition-colors">
           {article.title}
         </h3>
-        
+
         <p className="text-slate-300 text-sm mb-4 line-clamp-2">
           {article.description}
         </p>
@@ -96,18 +101,16 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
         </div>
 
         <div className="flex items-center justify-between">
-          <a 
-            href={article.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-1 text-blue-400 hover:text-blue-300 text-sm transition-colors"
-          >
+          <span className="flex items-center space-x-1 text-blue-400 group-hover:text-blue-300 text-sm transition-colors">
             <ExternalLink className="h-4 w-4" />
-            <span>Read More</span>
-          </a>
+            <span>Open</span>
+          </span>
 
           <button
-            onClick={() => onScheduleTweet?.(article)}
+            onClick={(e) => {
+              e.preventDefault(); // prevent anchor navigation
+              onScheduleTweet?.(article);
+            }}
             className="flex items-center space-x-1 text-slate-400 hover:text-blue-400 text-sm transition-colors bg-slate-700/50 hover:bg-blue-400/10 px-3 py-1 rounded-full"
           >
             <Twitter className="h-4 w-4" />
@@ -115,6 +118,6 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
           </button>
         </div>
       </div>
-    </div>
+    </a>
   );
 };

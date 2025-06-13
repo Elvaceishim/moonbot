@@ -1,3 +1,5 @@
+import { NewsArticle } from '../types/news';
+
 import Parser from 'rss-parser';
 import { RSSFeed, RSSFeedItem, CryptoNewsArticle, FeedSource } from '../types/rss';
 import { env } from '../config/env';
@@ -32,12 +34,12 @@ export class RSSService {
     cointelegraph: 'Cointelegraph',
     decrypt: 'Decrypt',
     cryptoslate: 'CryptoSlate',
-    ambcrypto:'https://ambcrypto.com/feed/',
-    beincrypto: 'https://beincrypto.com/feed/',
-    newsbtc: 'https://www.newsbtc.com/feed/,',
-    bitcoinist: 'https://bitcoinist.com/feed/',
-    bitcoinnews: 'https://news.bitcoin.com/feed/',
-    News: 'https://cryptopanic.com/news/rss/'
+    ambcrypto: 'AMB Crypto',
+    beincrypto: 'BeInCrypto',
+    newsbtc: 'NewsBTC',
+    bitcoinist: 'Bitcoinist',
+    bitcoinnews: 'Bitcoin News',
+    News: 'CryptoPanic'
   };
 
   constructor() {

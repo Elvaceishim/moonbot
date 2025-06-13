@@ -42,12 +42,38 @@ function App() {
 
   const loadInitialData = async () => {
     try {
-      const [newsArticles, newsSources] = await Promise.all([
-        NewsService.fetchLatestNews(),
-        NewsService.getNewsSources()
-      ]);
-      
-      setArticles(newsArticles);
+      const articles = await NewsService.fetchLatestNews();
+      // Provide static sources here since getNewsSources is not implemented
+      const newsSources: NewsSource[] = [
+        {
+          id: "coindesk",
+          name: "CoinDesk",
+          url: "https://coindesk.com",
+          rssUrl: "https://www.coindesk.com/arc/outboundfeeds/rss/",
+          isActive: true,
+          articlesCount: 0,
+          lastFetched: ""
+        },
+        {
+          id: "cointelegraph",
+          name: "Cointelegraph",
+          url: "https://cointelegraph.com",
+          rssUrl: "https://cointelegraph.com/rss",
+          isActive: true,
+          articlesCount: 0,
+          lastFetched: ""
+        },
+        {
+          id: "decrypt",
+          name: "Decrypt",
+          url: "https://decrypt.co",
+          rssUrl: "https://decrypt.co/feed",
+          isActive: true,
+          articlesCount: 0,
+          lastFetched: ""
+        }
+      ];
+      setArticles(articles);
       setSources(newsSources);
     } catch (error) {
       console.error('Failed to load data:', error);

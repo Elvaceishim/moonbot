@@ -1,12 +1,51 @@
-import { Handler } from '@netlify/functions';
-import { fetchCryptoNews } from '../../services/cryptoNews';
+import type { Handler } from '@netlify/functions';
+import Parser from 'rss-parser';
 
-const handler: Handler = async () => {
-  const results = await fetchCryptoNews();
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ results }),
-  };
+const parser = new Parser();
+
+const sources = [
+  {
+    id: "coindesk",
+    name: "CoinDesk",
+    rssUrl: "https://www.coindesk.com/arc/outboundfeeds/rss/"
+  },
+  {
+    id: "cointelegraph",
+    name: "Cointelegraph",
+    rssUrl: "https://cointelegraph.com/rss"
+  },
+  {
+    id: "decrypt",
+    name: "Decrypt",
+    rssUrl: "https://decrypt.co/feed"
+  }
+];
+
+export const handler: Handler = async () => {
+  try {
+    const allArticles: any[] = [];
+    for (const source of sources) {
+      if (!source.rssUrl) continue;
+      const feed = await parser.parseURL(source.rssUrl);
+      const articles = (feed.items || []).slice(0, 5).map(item => ({
+        id: Math.random().toString(36).substr(2, 9),
+        title: item.title || '',
+        description: item.contentSnippet || '',
+        url: item.link || '',
+        source: source.name,
+        publishedAt: item.pubDate || new Date().toISOString(),
+        imageUrl: '',
+      }));
+      allArticles.push(...articles);
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify(allArticles)
+    };
+  } catch (error: any) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message })
+    };
+  }
 };
-
-export { handler };
