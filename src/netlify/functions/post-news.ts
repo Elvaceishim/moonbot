@@ -1,27 +1,50 @@
 import { Handler } from '@netlify/functions';
-import { fetchCryptoNews } from '../../services/cryptoNews';
-import { summarizeNews } from '../../services/summarizer';
-import { postToTwitter } from '../../services/twitterBot';
+import { TwitterApi } from 'twitter-api-v2';
+import { NewsService } from '../../services/newsService';
+import dotenv from 'dotenv';
 
-const handler: Handler = async (event) => {
+dotenv.config();
+
+const twitterClient = new TwitterApi({
+  appKey: process.env.TWITTER_API_KEY!,
+  appSecret: process.env.TWITTER_API_SECRET!,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN!,
+  accessSecret: process.env.TWITTER_ACCESS_SECRET!
+});
+
+const postedArticles = new Set<string>(); // In production, replace this with persistent storage
+
+export const handler: Handler = async () => {
   try {
-    const { language } = JSON.parse(event.body || "{}");
-    const news = await fetchCryptoNews();
-    const titles = news.map((n) => n.title);
+    const articles = [
+      {
+        id: '1',
+        tweetText: 'Test tweet',
+        url: 'https://example.com',
+        hashtags: ['#test']
+      }
+    ];
 
-    const summary = await summarizeNews(titles, language || "en");
-    await postToTwitter(summary);
+    for (const article of articles) {
+      if (postedArticles.has(article.url)) continue;
+
+      const tweet = `${article.tweetText} ${article.url} ${article.hashtags.join(' ')}`;
+
+      await twitterClient.v2.tweet(tweet);
+      postedArticles.add(article.url);
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Posted!" }),
+      body: JSON.stringify({ message: 'Tweets posted successfully.' })
     };
-  } catch (err) {
+  } catch (error: any) {
+    console.error('Error in post-news:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({ error: error.message || 'Failed to post tweets' })
     };
   }
 };
 
-export { handler };
+
