@@ -44,7 +44,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "DeFi Protocol Introduces Revolutionary Yield Farming Mechanism",
     description: "New automated market maker promises higher yields with reduced impermanent loss through innovative algorithmic strategies.",
-    url: "https://decrypt.co/feed",
+    url: "https://decrypt.co",
     source: "Decrypt",
     publishedAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg",
@@ -57,7 +57,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "NFT Market Shows Signs of Recovery with Blue-Chip Collections",
     description: "Trading volumes increase 40% week-over-week as established NFT projects regain market confidence.",
-    url: "https://cryptoslate.com/feed/",
+    url: "https://cryptoslate.com",
     source: "CryptoSlate",
     publishedAt: new Date(Date.now() - 120 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/7567522/pexels-photo-7567522.jpeg",
