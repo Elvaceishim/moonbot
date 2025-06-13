@@ -1,0 +1,6 @@
+[functions]
+  directory = "netlify/functions"
+
+[[functions]]
+  name = "post-news"
+  schedule = "*/30 * * * *" # every 30 minutes
