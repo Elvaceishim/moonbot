@@ -5,7 +5,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "Bitcoin Surges Past $45,000 as Institutional Adoption Accelerates",
     description: "Major investment firms announce new cryptocurrency allocations, driving Bitcoin to multi-month highs amid growing institutional interest.",
-    url: "https://www.coindesk.com/arc/outboundfeeds",
+    url: "https://www.coindesk.com",
     source: "CoinDesk",
     publishedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg",
@@ -31,7 +31,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "SEC Delays Decision on Spot Bitcoin ETF Applications",
     description: "Regulatory uncertainty continues as the Securities and Exchange Commission postpones rulings on several Bitcoin ETF proposals.",
-    url: "https://example.com/sec-etf-delay",
+    url: "https://www.theblock.co",
     source: "The Block",
     publishedAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg",
@@ -44,7 +44,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "DeFi Protocol Introduces Revolutionary Yield Farming Mechanism",
     description: "New automated market maker promises higher yields with reduced impermanent loss through innovative algorithmic strategies.",
-    url: "https://example.com/defi-yield",
+    url: "https://decrypt.co/feed",
     source: "Decrypt",
     publishedAt: new Date(Date.now() - 90 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/7567443/pexels-photo-7567443.jpeg",
@@ -57,7 +57,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "NFT Market Shows Signs of Recovery with Blue-Chip Collections",
     description: "Trading volumes increase 40% week-over-week as established NFT projects regain market confidence.",
-    url: "https://example.com/nft-recovery",
+    url: "https://cryptoslate.com/feed/",
     source: "CryptoSlate",
     publishedAt: new Date(Date.now() - 120 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/7567522/pexels-photo-7567522.jpeg",
@@ -70,7 +70,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "Central Bank Digital Currencies Gain Momentum Worldwide",
     description: "Over 50 countries actively develop or pilot central bank digital currencies as digital payment adoption accelerates.",
-    url: "https://example.com/cbdc-momentum",
+    url: "https://www.binance.com/en-ZA/blog",
     source: "Binance Blog",
     publishedAt: new Date(Date.now() - 150 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/7567528/pexels-photo-7567528.jpeg",
