@@ -5,7 +5,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "Bitcoin Surges Past $45,000 as Institutional Adoption Accelerates",
     description: "Major investment firms announce new cryptocurrency allocations, driving Bitcoin to multi-month highs amid growing institutional interest.",
-    url: "https://example.com/bitcoin-surge",
+    url: "https://www.coindesk.com/arc/outboundfeeds/rss/",
     source: "CoinDesk",
     publishedAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/844124/pexels-photo-844124.jpeg",
@@ -18,7 +18,7 @@ const mockNewsArticles: Omit<NewsArticle, 'id'>[] = [
   {
     title: "Ethereum Layer 2 Solutions See Record Transaction Volume",
     description: "Polygon, Arbitrum, and Optimism process over 2 million transactions daily as users seek lower fees and faster speeds.",
-    url: "https://example.com/ethereum-l2",
+    url: "https://cointelegraph.com/rss",
     source: "Cointelegraph",
     publishedAt: new Date(Date.now() - 45 * 60 * 1000).toISOString(),
     imageUrl: "https://images.pexels.com/photos/6771307/pexels-photo-6771307.jpeg",
