@@ -1,13 +1,10 @@
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY!;
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
+export const summarizeNews = async (titles: string[], language: string = "en") => {
+  const prompt = `Summarize the following crypto news headlines in ${language === "fr" ? "French" : "English"}:\n${titles.join("\n")}`;
 
-export const summarizeNews = async (titles: string[]) => {
-  const prompt = `Summarize these crypto news headlines:\n${titles.join("\n")}`;
-
-  const response = await fetch(OPENAI_API_URL, {
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${OPENAI_API_KEY}`,
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({

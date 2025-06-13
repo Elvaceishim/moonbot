@@ -1,7 +1,9 @@
+// src/pages/Dashboard.tsx
 import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState<any[]>([]);
+  const [language, setLanguage] = useState<"en" | "fr">("en");
   const [loading, setLoading] = useState(false);
   const [posted, setPosted] = useState(false);
 
@@ -13,11 +15,16 @@ const Dashboard = () => {
 
   const postNow = async () => {
     setLoading(true);
-    const res = await fetch("/.netlify/functions/post-news");
+    const res = await fetch("/.netlify/functions/post-news", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ language }),
+    });
     await res.json();
-    setPosted(true);
     setLoading(false);
-    alert("✅ Summary posted to Twitter");
+    setPosted(true);
   };
 
   useEffect(() => {
@@ -25,24 +32,38 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">📰 Crypto News Dashboard</h1>
 
-      <ul className="space-y-2">
-        {news.map((item: any) => (
-          <li key={item.id} className="border p-2 rounded">{item.title}</li>
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-sm text-gray-600">Language:</span>
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value as "en" | "fr")}
+          className="border rounded px-2 py-1"
+        >
+          <option value="en">English</option>
+          <option value="fr">French</option>
+        </select>
+      </div>
+
+      <ul className="space-y-2 mb-6">
+        {news.map((item, idx) => (
+          <li key={idx} className="border p-3 rounded shadow text-sm">
+            {item.title}
+          </li>
         ))}
       </ul>
 
       <button
-        onClick={postNow}
         disabled={loading}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+        onClick={postNow}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
       >
         {loading ? "Posting..." : "📤 Post Now"}
       </button>
 
-      {posted && <p className="mt-2 text-green-600">Summary posted!</p>}
+      {posted && <p className="mt-4 text-green-600">✅ Summary posted!</p>}
     </div>
   );
 };
