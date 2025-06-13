@@ -8,4 +8,4 @@
 
 [[functions]]
   name = "post-news"
-  schedule = "*/30 * * * *" # every 30 minutes
+  schedule = "*/30 * * * *"
