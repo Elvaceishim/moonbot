@@ -4,7 +4,7 @@
   command = "npm run build"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "src/netlify/functions"
 
 [[functions]]
   name = "post-news"
