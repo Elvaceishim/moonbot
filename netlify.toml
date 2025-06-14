@@ -3,6 +3,6 @@
   publish = "dist"
   command = "npm run build"
 
-[[functions]]
+[functions]
   path = "/.netlify/functions/post-news-schedule"
   schedule = "0 */2 * * *"
