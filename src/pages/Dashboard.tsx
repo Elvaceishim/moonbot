@@ -15,7 +15,7 @@ const Dashboard = () => {
 
   const postNow = async () => {
     setLoading(true);
-    const res = await fetch("/.netlify/functions/post-news.schedule", {
+    const res = await fetch("/.netlify/functions/post-news-schedule", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -6,5 +6,5 @@
 [functions]
   directory = "src/netlify/functions"
 
-[functions."post-news.schedule"]
+[functions."post-news-schedule"]
   schedule = "*/30 * * * *"
