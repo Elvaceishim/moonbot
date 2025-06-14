@@ -2,10 +2,45 @@
 import { Handler } from '@netlify/functions';
 import { TwitterApi } from 'twitter-api-v2';
 
-interface RateLimitInfo {
-  canTweet: boolean;
-  remaining: number | null;
-  resetTime: number | null;
+// News fetching function
+async function fetchLatestNews() {
+  try {
+    // You can adapt this to match your existing fetch-news function logic
+    const response = await fetch(`${process.env.VITE_NEXT_PUBLIC_BASE_URL || 'http://localhost:8888'}/.netlify/functions/fetch-news`);
+    
+    if (!response.ok) {
+      console.error('Failed to fetch news:', response.status);
+      return null;
+    }
+    
+    const newsData = await response.json();
+    console.log(`📊 Fetched ${newsData.articles?.length || 0} news articles`);
+    return newsData;
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    return null;
+  }
+}
+
+// Format news article into tweet format
+function formatNewsForTweet(article: any): string {
+  const { title, source, url, publishedAt } = article;
+  
+  // Create engaging tweet format
+  let tweet = `🚨 ${title}`;
+  
+  if (source) {
+    tweet += `\n\n📰 via ${source}`;
+  }
+  
+  if (url) {
+    tweet += `\n🔗 ${url}`;
+  }
+  
+  // Add relevant hashtags
+  tweet += '\n\n#Crypto #Bitcoin #News #Blockchain';
+  
+  return tweet;
 }
 
 // Rate limit checking function
@@ -120,12 +155,30 @@ export const handler: Handler = async () => {
       };
     }
     
-    // 📝 Prepare tweet content
-    const timestamp = new Date().toLocaleString();
-    const tweet = `Crypto news update from automated bot - ${timestamp}`;
+    // 📰 Fetch real crypto news
+    console.log('📰 Fetching latest crypto news...');
+    const newsData = await fetchLatestNews();
     
-    console.log('📝 Tweet content prepared:', tweet);
-    console.log('📝 Tweet length:', tweet.length);
+    let tweet: string;
+    
+    if (!newsData || !newsData.articles || newsData.articles.length === 0) {
+      console.log('⚠️ No news articles found, posting general update');
+      tweet = `🚀 Crypto markets update - Stay informed with the latest developments! ${new Date().toLocaleString()}`;
+      
+      console.log('📝 Fallback tweet prepared:', tweet);
+      console.log('📝 Tweet length:', tweet.length);
+    } else {
+      // Format the news into a tweet
+      tweet = formatNewsForTweet(newsData.articles[0]); // Use the first/latest article
+      
+      console.log('📝 News tweet prepared:', tweet);
+      console.log('📝 Tweet length:', tweet.length);
+      
+      if (tweet.length > 280) {
+        console.log('⚠️ Tweet too long, truncating...');
+        tweet = tweet.substring(0, 250) + '... 🔗';
+      }
+    }
     
     // Test API connection
     console.log('🔍 Testing Twitter API connection...');
