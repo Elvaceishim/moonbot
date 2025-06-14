@@ -2,6 +2,43 @@
 import { Handler } from '@netlify/functions';
 import { TwitterApi } from 'twitter-api-v2';
 
+interface RateLimitInfo {
+  canTweet: boolean;
+  remaining: number | null;
+  resetTime: number | null;
+}
+
+// Rate limit checking function
+async function checkRateLimits(client: TwitterApi): Promise<RateLimitInfo> {
+  try {
+    // Make a lightweight API call to check current limits
+    await client.v2.me();
+    
+    return {
+      canTweet: true,
+      remaining: null,
+      resetTime: null
+    };
+  } catch (error: any) {
+    if (error.code === 429 && error.rateLimit?.day) {
+      console.log(`❌ Rate limit hit: ${error.rateLimit.day.remaining}/${error.rateLimit.day.limit} remaining`);
+      console.log(`⏰ Resets at: ${new Date(error.rateLimit.day.reset * 1000)}`);
+      
+      return {
+        canTweet: false,
+        remaining: error.rateLimit.day.remaining,
+        resetTime: error.rateLimit.day.reset * 1000
+      };
+    }
+    
+    return {
+      canTweet: true,
+      remaining: null,
+      resetTime: null
+    };
+  }
+}
+
 export const handler: Handler = async () => {
   // 🔍 DEBUGGING: Check environment variables
   console.log('=== ENVIRONMENT VARIABLES DEBUG ===');
@@ -62,24 +99,44 @@ export const handler: Handler = async () => {
   }
 
   try {
-    console.log('🚀 Starting tweet process...');
+    console.log('🚀 Starting scheduled tweet process...');
     
-    // 🧪 Simple test tweet
+    // 📊 CHECK RATE LIMITS FIRST
+    console.log('🔍 Checking rate limits...');
+    const rateLimitInfo = await checkRateLimits(twitterClient);
+    
+    if (!rateLimitInfo.canTweet) {
+      console.log('⏰ Rate limit exceeded, skipping this scheduled tweet');
+      console.log('📊 Tweets remaining today:', rateLimitInfo.remaining);
+      
+      return {
+        statusCode: 200, // Return 200 for scheduled functions so they don't retry
+        body: JSON.stringify({
+          message: 'Scheduled tweet skipped due to rate limit',
+          nextReset: rateLimitInfo.resetTime ? new Date(rateLimitInfo.resetTime) : null,
+          remaining: rateLimitInfo.remaining,
+          timestamp: new Date().toISOString()
+        })
+      };
+    }
+    
+    // 📝 Prepare tweet content
     const timestamp = new Date().toLocaleString();
-    const tweet = `Test tweet from Netlify function - ${timestamp}`;
+    const tweet = `Crypto news update from automated bot - ${timestamp}`;
     
     console.log('📝 Tweet content prepared:', tweet);
     console.log('📝 Tweet length:', tweet.length);
     
-    // Test API connection first
+    // Test API connection
     console.log('🔍 Testing Twitter API connection...');
     const me = await twitterClient.v2.me();
     console.log('✅ Connected to Twitter as:', me.data.username);
     
-    console.log('📤 Attempting to post tweet...');
+    // Post the tweet
+    console.log('📤 Attempting to post scheduled tweet...');
     const tweetResponse = await twitterClient.v2.tweet(tweet);
     
-    console.log('✅ Tweet posted successfully!');
+    console.log('✅ Scheduled tweet posted successfully!');
     console.log('📊 Tweet ID:', tweetResponse.data.id);
     console.log('📊 Tweet text:', tweetResponse.data.text);
     console.log('🔗 Tweet URL: https://twitter.com/i/status/' + tweetResponse.data.id);
@@ -87,15 +144,35 @@ export const handler: Handler = async () => {
     return {
       statusCode: 200,
       body: JSON.stringify({ 
-        message: 'Test tweet posted successfully!', 
+        message: 'Scheduled tweet posted successfully!', 
         tweetId: tweetResponse.data.id,
         tweetText: tweetResponse.data.text,
         tweetUrl: `https://twitter.com/i/status/${tweetResponse.data.id}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        scheduledExecution: true
       }),
     };
+
   } catch (error: any) {
-    console.error('❌ Tweet failed:', error);
+    console.error('❌ Scheduled tweet failed:', error);
+    
+    // Handle rate limit errors gracefully
+    if (error.code === 429) {
+      console.error('Rate limit exceeded during tweet attempt');
+      const resetTime = error.rateLimit?.day?.reset ? 
+        new Date(error.rateLimit.day.reset * 1000) : 
+        new Date(Date.now() + 24 * 60 * 60 * 1000);
+      
+      return {
+        statusCode: 200, // Return 200 so scheduled function doesn't retry
+        body: JSON.stringify({
+          message: 'Scheduled tweet failed - daily rate limit exceeded',
+          resetTime: resetTime.toISOString(),
+          error: 'Rate limit exceeded',
+          timestamp: new Date().toISOString()
+        })
+      };
+    }
     
     // More detailed error logging
     if (error.data) {
@@ -105,11 +182,16 @@ export const handler: Handler = async () => {
       console.error('Twitter API errors:', error.errors);
     }
 
+    // For scheduled functions, return 200 to prevent retries unless it's a recoverable error
+    const isRecoverable = error.code >= 500 || error.code === 503;
+    
     return {
-      statusCode: 500,
+      statusCode: isRecoverable ? 500 : 200,
       body: JSON.stringify({ 
-        error: error.message || 'Failed to tweet',
-        twitterError: error.data || error.errors || null
+        error: error.message || 'Scheduled tweet failed',
+        twitterError: error.data || error.errors || null,
+        timestamp: new Date().toISOString(),
+        scheduledExecution: true
       }),
     };
   }
