@@ -62,31 +62,36 @@ export const handler: Handler = async () => {
   }
 
   try {
-    // ✅ Test article
-    const articles = [
-      {
-        id: '123',
-        title: '🚀 Bitcoin just hit $100K!',
-        url: 'https://example.com/bitcoin-hits-100k',
-        hashtags: ['#Bitcoin', '#CryptoNews']
-      }
-    ];
-
-    const latest = articles[0];
-    const tweet = `${latest.title}\n\n${latest.url}\n\n${latest.hashtags.join(' ')}`;
+    console.log('🚀 Starting tweet process...');
     
-    console.log('📝 About to post tweet:', tweet);
+    // 🧪 Simple test tweet
+    const timestamp = new Date().toLocaleString();
+    const tweet = `Test tweet from Netlify function - ${timestamp}`;
     
+    console.log('📝 Tweet content prepared:', tweet);
+    console.log('📝 Tweet length:', tweet.length);
+    
+    // Test API connection first
+    console.log('🔍 Testing Twitter API connection...');
+    const me = await twitterClient.v2.me();
+    console.log('✅ Connected to Twitter as:', me.data.username);
+    
+    console.log('📤 Attempting to post tweet...');
     const tweetResponse = await twitterClient.v2.tweet(tweet);
     
-    console.log('✅ Tweet posted successfully:', tweetResponse.data);
+    console.log('✅ Tweet posted successfully!');
+    console.log('📊 Tweet ID:', tweetResponse.data.id);
+    console.log('📊 Tweet text:', tweetResponse.data.text);
+    console.log('🔗 Tweet URL: https://twitter.com/i/status/' + tweetResponse.data.id);
 
     return {
       statusCode: 200,
       body: JSON.stringify({ 
-        message: 'Test tweet posted!', 
+        message: 'Test tweet posted successfully!', 
         tweetId: tweetResponse.data.id,
-        tweetText: tweet
+        tweetText: tweetResponse.data.text,
+        tweetUrl: `https://twitter.com/i/status/${tweetResponse.data.id}`,
+        timestamp: new Date().toISOString()
       }),
     };
   } catch (error: any) {
