@@ -1,14 +1,8 @@
-export const config = {
-  schedule: '@hourly',
-};
-
 import { Handler } from '@netlify/functions';
 import { TwitterApi } from 'twitter-api-v2';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const baseUrl = process.env.SITE_URL || 'http://localhost:8888';
 
 const twitterClient = new TwitterApi({
   appKey: process.env.VITE_TWITTER_API_KEY!,
@@ -17,41 +11,39 @@ const twitterClient = new TwitterApi({
   accessSecret: process.env.VITE_TWITTER_ACCESS_SECRET!,
 });
 
-// TEMPORARY: Replace with real persistent storage later
-const postedArticles = new Set<string>();
+const postedArticles = new Set<string>(); // In-memory tracking (for testing)
 
 export const handler: Handler = async () => {
   try {
-    const res = await fetch(`${baseUrl}/.netlify/functions/fetch-news`);
-    const articles = await res.json();
-
-    const tweets = [];
+    const articles = [
+      {
+        id: '123',
+        title: '🚀 Bitcoin just hit $100K!',
+        url: 'https://example.com/bitcoin-hits-100k',
+        hashtags: ['#Bitcoin', '#CryptoNews']
+      }
+    ];
 
     for (const article of articles) {
-      if (!article.url || postedArticles.has(article.url)) continue;
+      if (postedArticles.has(article.url)) continue;
 
-      const tweetText = `${article.title}\n\n${article.url}\n\n${(article.hashtags || []).join(' ') || '#CryptoNews'}`;
+      const tweet = `${article.title} ${article.url} ${article.hashtags.join(' ')}`;
 
-      const tweetResponse = await twitterClient.v2.tweet(tweetText);
-      tweets.push(tweetResponse);
+      console.log('Tweeting:', tweet);
 
-      postedArticles.add(article.url); // Mark this article as tweeted
+      await twitterClient.v2.tweet(tweet);
+      postedArticles.add(article.url);
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        message: `${tweets.length} tweet(s) posted.`,
-        tweets
-      }),
+      body: JSON.stringify({ message: 'Test tweet posted successfully.' })
     };
   } catch (error: any) {
-    console.error('Scheduler error:', error);
+    console.error('Error in post-news:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: error.message || 'Failed to post tweets'
-      }),
+      body: JSON.stringify({ error: error.message || 'Failed to post tweet' })
     };
   }
 };
