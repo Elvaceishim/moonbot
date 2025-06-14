@@ -25,7 +25,7 @@ export const handler: Handler = async () => {
     ];
 
     for (const article of articles) {
-      if (postedArticles.has(article.url)) continue;
+      // if (postedArticles.has(article.url)) continue;
 
       const tweet = `${article.title} ${article.url} ${article.hashtags.join(' ')}`;
 
