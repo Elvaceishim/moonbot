@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import React from 'react';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { NewsCard } from './components/NewsCard';
@@ -25,7 +24,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'bullish' | 'bearish' | 'neutral'>('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isLive, setIsLive] = useState(true);
+  const [isLive] = useState(true);
 
   useEffect(() => {
     loadInitialData();
@@ -113,7 +112,6 @@ function App() {
   });
 
   const bullishCount = articles.filter(a => a.sentiment === 'bullish').length;
-  const bearishCount = articles.filter(a => a.sentiment === 'bearish').length;
   const avgRelevance = articles.length > 0 
     ? Math.round(articles.reduce((sum, a) => sum + a.relevanceScore, 0) / articles.length)
     : 0;

@@ -1,7 +1,5 @@
-import { NewsArticle } from '../types/news';
-
 import Parser from 'rss-parser';
-import { RSSFeed, RSSFeedItem, CryptoNewsArticle, FeedSource } from '../types/rss';
+import { CryptoNewsArticle, FeedSource } from '../types/rss';
 import { env } from '../config/env';
 
 interface CachedFeed {
