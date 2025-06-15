@@ -112,9 +112,3 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
-@media (max-width: 768px) {
-  .w-80 {
-    display: none !important;
-  }
-}
