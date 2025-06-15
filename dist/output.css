@@ -554,10 +554,6 @@ video {
   display: none;
 }
 
-.visible {
-  visibility: visible;
-}
-
 .static {
   position: static;
 }
@@ -667,6 +663,10 @@ video {
   margin-top: auto;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -676,6 +676,10 @@ video {
 
 .block {
   display: block;
+}
+
+.inline {
+  display: inline;
 }
 
 .flex {
@@ -1402,10 +1406,6 @@ video {
 }
 
 @media (min-width: 768px) {
-  .md\:hidden {
-    display: none;
-  }
-
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

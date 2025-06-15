@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Globe, Clock, CheckCircle, AlertCircle, BarChart3, Menu, X } from 'lucide-react';
+import { Globe, Clock, CheckCircle, BarChart3 } from 'lucide-react';
 import { NewsSource } from '../types/news';
 
 interface SidebarProps {
   sources: NewsSource[];
   totalTweets: number;
   scheduledTweets: number;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (open: boolean) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, scheduledTweets }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export const Sidebar: React.FC<SidebarProps> = ({
+  sources,
+  totalTweets,
+  scheduledTweets,
+  isMobileMenuOpen,
+  setIsMobileMenuOpen
+}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -23,30 +30,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [setIsMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      {isMobile && (
-        <button
-          onClick={toggleMobileMenu}
-          className="fixed top-20 left-4 z-50 bg-slate-800 border border-slate-600 text-white p-3 rounded-lg shadow-lg hover:bg-slate-700 transition-colors"
-          aria-label="Toggle Dashboard"
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      )}
-
-      {/* Overlay for mobile */}
       {isMobile && isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
@@ -54,7 +43,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
         />
       )}
 
-      {/* Sidebar */}
       <div
         className={`
           w-80 bg-slate-900 border-r border-slate-700 flex flex-col
@@ -63,19 +51,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
         `}
       >
         <div className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-white text-center md:text-left w-full">Dashboard</h2>
-            {/* Close button for mobile */}
-            {isMobile && (
-              <button
-                onClick={closeMobileMenu}
-                className="text-slate-400 hover:text-white transition-colors"
-                aria-label="Close Dashboard"
-              >
-                <X size={20} />
-              </button>
-            )}
-          </div>
+          <h2 className="text-lg font-semibold text-white mb-6">Dashboard</h2>
 
           <div className="space-y-4 mb-8">
             <div className="bg-slate-800 rounded-lg p-4">
@@ -106,26 +82,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
             <div className="space-y-3">
               {sources.map((source) => (
                 <div key={source.id} className="bg-slate-800 rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-white">{source.name}</span>
-                    {source.isActive ? (
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                    ) : (
-                      <AlertCircle className="h-4 w-4 text-red-400" />
-                    )}
-                  </div>
-                  <div className="text-xs text-slate-400 space-y-1">
-                    <p>{source.articlesCount} articles</p>
-                    <p>Last: {source.lastFetched ? new Date(source.lastFetched).toLocaleTimeString() : 'Never'}</p>
-                  </div>
+                  <span className="text-sm font-medium text-white">{source.name}</span>
+                  {source.isActive && (
+                    <CheckCircle className="h-4 w-4 text-green-400 inline ml-2" />
+                  )}
                 </div>
               ))}
             </div>
           </div>
-        </div>
-
-        <div className="mt-auto p-6 border-t border-slate-700">
-          {/* Footer content if needed */}
         </div>
       </div>
     </>
