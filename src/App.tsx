@@ -114,7 +114,7 @@ function App() {
 
   const bullishCount = articles.filter(a => a.sentiment === 'bullish').length;
   const avgRelevance = articles.length > 0 
-    ? Math.round(articles.reduce((sum, a) => sum + a.relevanceScore, 0) / articles.length)
+    ? Math.round(articles.reduce((sum, a) => sum + (a.relevanceScore || 0), 0) / articles.length)
     : 0;
 
   if (isLoading) {
