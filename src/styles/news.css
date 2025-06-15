@@ -113,11 +113,8 @@
   cursor: pointer;
 }
 
-/* Hide dashboard on mobile devices */
 @media (max-width: 768px) {
-  .dashboard,
-  #dashboard,
-  [class*="dashboard"] {
+  .w-80 {
     display: none !important;
   }
 }
