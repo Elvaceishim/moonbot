@@ -36,7 +36,6 @@ export const Header: React.FC<HeaderProps> = ({ totalArticles, isLive }) => {
             </div>
 
             <div className="flex items-center space-x-3 text-slate-400">
-              <Globe className="h-5 w-5 hover:text-blue-400 cursor-pointer transition-colors" />
               <Twitter className="h-5 w-5 hover:text-blue-400 cursor-pointer transition-colors" />
             </div>
           </div>
