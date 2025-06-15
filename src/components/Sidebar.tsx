@@ -71,14 +71,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <BarChart3 className="h-8 w-8 text-green-400" />
               </div>
             </div>
-            <div className="bg-slate-800 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  
-                </div>
-                <Clock className="h-8 w-8 text-blue-400" />
-              </div>
-            </div>
+            
           </div>
 
           <div>
