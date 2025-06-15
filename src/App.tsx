@@ -42,8 +42,11 @@ function App() {
 
   const loadInitialData = async () => {
     try {
-      const articles = await NewsService.fetchLatestNews();
-      // Provide static sources here since getNewsSources is not implemented
+      const articles = (await NewsService.fetchLatestNews()).map(article => ({
+        ...article,
+        sentiment: article.sentiment || 'neutral', // fallback if missing
+      }));
+      
       const newsSources: NewsSource[] = [
         {
           id: "coindesk",
@@ -102,6 +105,7 @@ function App() {
     setScheduledTweets(prev => [...prev, newTweet]);
     setSelectedArticle(null);
   };
+
 
   const filteredArticles = articles.filter(article => {
     const matchesFilter = filter === 'all' || article.sentiment === filter;

@@ -28,15 +28,19 @@ export const handler: Handler = async () => {
       if (!source.rssUrl) continue;
       const feed = await parser.parseURL(source.rssUrl);
       const articles = (feed.items || []).slice(0, 5).map(item => ({
-      id: Math.random().toString(36).substr(2, 9),
-      title: item.title || '',
-      description: item.contentSnippet || '',
-      url: item.link || '',
-      source: source.name,
-      publishedAt: item.pubDate || new Date().toISOString(),
-      imageUrl: '',
-      hashtags: item.hashtags ?? [], // ✅ Add this line
-}));
+        id: Math.random().toString(36).substr(2, 9),
+        title: item.title || '',
+        description: item.contentSnippet || '',
+        url: item.link || '',
+        source: source.name,
+        publishedAt: item.pubDate || new Date().toISOString(),
+        imageUrl: '',
+        sentiment: 'neutral', // <-- Always set a default or calculated value
+        relevanceScore: 80,
+        tweetText: '',
+        hashtags: [],
+        keywords: [],
+      }));
       allArticles.push(...articles);
     }
     return {
