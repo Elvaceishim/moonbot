@@ -112,3 +112,12 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* Hide dashboard on mobile devices */
+@media (max-width: 768px) {
+  .dashboard,
+  #dashboard,
+  [class*="dashboard"] {
+    display: none !important;
+  }
+}
