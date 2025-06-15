@@ -64,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
       >
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-white">Dashboard</h2>
+            <h2 className="text-lg font-semibold text-white text-center md:text-left w-full">Dashboard</h2>
             {/* Close button for mobile */}
             {isMobile && (
               <button
