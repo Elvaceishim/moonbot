@@ -1,56 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Globe, Clock, CheckCircle, AlertCircle, BarChart3, Menu, X } from 'lucide-react';
+import { Globe, Clock, CheckCircle, AlertCircle, BarChart3, X } from 'lucide-react';
 import { NewsSource } from '../types/news';
 
 interface SidebarProps {
   sources: NewsSource[];
   totalTweets: number;
   scheduledTweets: number;
+  isMobileMenuOpen: boolean;
+  onCloseMobileMenu: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, scheduledTweets }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export const Sidebar: React.FC<SidebarProps> = ({ 
+  sources, 
+  totalTweets, 
+  scheduledTweets,
+  isMobileMenuOpen,
+  onCloseMobileMenu
+}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
-        setIsMobileMenuOpen(false);
-      }
     };
-
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <>
-      {/* Mobile Menu Button */}
-      {isMobile && (
-        <button
-          onClick={toggleMobileMenu}
-          className="fixed top-20 left-4 z-50 bg-slate-800 border border-slate-600 text-white p-3 rounded-lg shadow-lg hover:bg-slate-700 transition-colors"
-          aria-label="Toggle Dashboard"
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      )}
-
       {/* Overlay for mobile */}
       {isMobile && isMobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={closeMobileMenu}
+          onClick={onCloseMobileMenu}
         />
       )}
 
@@ -68,7 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
             {/* Close button for mobile */}
             {isMobile && (
               <button
-                onClick={closeMobileMenu}
+                onClick={onCloseMobileMenu}
                 className="text-slate-400 hover:text-white transition-colors"
                 aria-label="Close Dashboard"
               >

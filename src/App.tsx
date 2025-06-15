@@ -25,6 +25,7 @@ function App() {
   const [filter, setFilter] = useState<'all' | 'bullish' | 'bearish' | 'neutral'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLive] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     loadInitialData();
@@ -129,16 +130,23 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-900">
-      <Header totalArticles={articles.length} isLive={isLive} />
+      <Header 
+        totalArticles={articles.length} 
+        isLive={isLive}
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
       
-      <div className="flex">
+      <div className="flex pt-16"> {/* Added pt-16 for fixed header spacing */}
         <Sidebar 
           sources={sources} 
           totalTweets={scheduledTweets.filter(t => t.status === 'posted').length}
           scheduledTweets={scheduledTweets.filter(t => t.status === 'scheduled').length}
+          isMobileMenuOpen={isMobileMenuOpen}
+          onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
         />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 md:p-6 overflow-x-hidden"> {/* Added overflow-x-hidden */}
           <div className="max-w-6xl mx-auto">
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

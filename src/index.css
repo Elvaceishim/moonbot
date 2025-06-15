@@ -26,9 +26,21 @@
   }
 }
 
+
+
 /* Ensure content doesn't get hidden under fixed header */
-@media (min-width: 768px) {
-  main {
-    @apply ml-80; /* Account for sidebar width */
+@media (max-width: 768px) {
+  body {
+    padding-top: 64px; /* Match your header height */
+  }
+  
+  /* Prevent horizontal scrolling */
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Make stats cards more compact on mobile */
+  .stat-card {
+    padding: 0.75rem;
   }
 }
