@@ -138,8 +138,9 @@ function App() {
       />
       
       <div className="flex pt-16"> {/* Added pt-16 for fixed header spacing */}
-        <Sidebar 
-          sources={sources} 
+        <Sidebar
+          sources={sources}
+          articles={articles}
           totalTweets={scheduledTweets.filter(t => t.status === 'posted').length}
           scheduledTweets={scheduledTweets.filter(t => t.status === 'scheduled').length}
           isMobileMenuOpen={isMobileMenuOpen}

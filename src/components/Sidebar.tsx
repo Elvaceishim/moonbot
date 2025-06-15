@@ -13,7 +13,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({
   sources,
-  articles, // <-- Add this line
+  articles = [], // <-- Default to empty array
   totalTweets,
   scheduledTweets,
   isMobileMenuOpen,
@@ -32,7 +32,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const sourcesWithCounts = sources.map(source => ({
     ...source,
-    articlesCount: articles.filter(article => article.source === source.name).length
+    articlesCount: (articles ?? []).filter(article => article.source === source.name).length
   }));
 
   return (
