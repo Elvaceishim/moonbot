@@ -39,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
       {isMobile && (
         <button
           onClick={toggleMobileMenu}
-          className="fixed top-4 left-4 z-50 bg-slate-800 border border-slate-600 text-white p-3 rounded-lg shadow-lg hover:bg-slate-700 transition-colors"
+          className="fixed top-20 left-4 z-50 bg-slate-800 border border-slate-600 text-white p-3 rounded-lg shadow-lg hover:bg-slate-700 transition-colors"
           aria-label="Toggle Dashboard"
         >
           {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}

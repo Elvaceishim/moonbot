@@ -1,3 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@media (max-width: 768px) {
+  /* Adjust header layout for mobile */
+  .header-container,
+  header,
+  .bg-slate-900 {
+    padding-left: 60px;
+    padding-right: 16px;
+  }
+  
+  /* Make header text smaller and centered on mobile */
+  .header h1,
+  .header .text-xl,
+  header h1,
+  header .text-xl {
+    font-size: 1.1rem !important;
+    text-align: center;
+    line-height: 1.3;
+  }
+  
+  /* Hide subtitle on mobile if it exists */
+  .header .text-sm,
+  header .text-sm,
+  .subtitle {
+    display: none;
+  }
+}
