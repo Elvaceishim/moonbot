@@ -74,8 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <div className="bg-slate-800 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-2xl font-bold text-blue-400">{scheduledTweets}</p>
-                  <p className="text-sm text-slate-400">Scheduled</p>
+                  
                 </div>
                 <Clock className="h-8 w-8 text-blue-400" />
               </div>
