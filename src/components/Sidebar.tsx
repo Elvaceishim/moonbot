@@ -1,5 +1,5 @@
 import React from 'react';
-import { Globe, Clock, CheckCircle, AlertCircle, BarChart3, Settings } from 'lucide-react';
+import { Globe, Clock, CheckCircle, AlertCircle, BarChart3 } from 'lucide-react';
 import { NewsSource } from '../types/news';
 
 interface SidebarProps {
@@ -13,7 +13,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
     <div className="w-80 bg-slate-900 border-r border-slate-700 flex flex-col">
       <div className="p-6">
         <h2 className="text-lg font-semibold text-white mb-6">Dashboard</h2>
-        
+        {/* Add this right after the Dashboard h2 heading */}
+        <button
+          className="dashboard-close-btn"
+          id="dashboardCloseBtn"
+          style={{
+            display: 'none',
+            position: 'absolute',
+            top: 15,
+            right: 15,
+            background: '#334155',
+            border: 'none',
+            color: 'white',
+            width: 30,
+            height: 30,
+            borderRadius: 4,
+            cursor: 'pointer'
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
         <div className="space-y-4 mb-8">
           <div className="bg-slate-800 rounded-lg p-4">
             <div className="flex items-center justify-between">
