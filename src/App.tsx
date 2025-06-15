@@ -103,8 +103,6 @@ function App() {
     setSelectedArticle(null);
   };
 
-
-
   const filteredArticles = articles.filter(article => {
     const matchesFilter = filter === 'all' || article.sentiment === filter;
     const matchesSearch = searchTerm === '' || 
@@ -121,16 +119,27 @@ function App() {
     ? Math.round(articles.reduce((sum, a) => sum + (a.relevanceScore || 0), 0) / articles.length)
     : 0;
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <RefreshCw className="h-8 w-8 text-blue-400 animate-spin mx-auto mb-4" />
-          <p className="text-slate-300">Loading crypto news...</p>
-        </div>
-      </div>
-    );
+ 
+
+  const handleRefresh = async () => {
+  setIsLoading(true);
+  try {
+    await loadInitialData();
+  } catch (error) {
+    console.error('Refresh failed:', error);
+  } finally {
+    setIsLoading(false);
   }
+};
+
+// Update the button onClick:
+<button
+  onClick={handleRefresh}
+  className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+>
+  <RefreshCw className="h-4 w-4" />
+  <span>Refresh</span>
+</button>
 
   return (
     <div className="min-h-screen bg-slate-900">
