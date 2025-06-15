@@ -28,6 +28,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const sourcesWithCounts = sources.map(source => ({
+    ...source,
+    articlesCount: articles.filter(article => article.source === source.name).length
+  }));
+
   return (
     <>
       {/* Overlay for mobile */}
@@ -80,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               News Sources
             </h3>
             <div className="space-y-3">
-              {sources.map((source) => (
+              {sourcesWithCounts.map((source) => (
                 <div key={source.id} className="bg-slate-800 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-white">{source.name}</span>
