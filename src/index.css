@@ -2,21 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Fix for mobile layout */
 @media (max-width: 768px) {
-
-  .header-title,
-  h1,
-  [class*="text-"] {
-    text-align: center !important;
-    margin-left: 60px; /* Make room for hamburger */
-    margin-right: 20px;
+  body {
+    @apply overflow-x-hidden; /* Prevent horizontal scrolling */
   }
-  
-  /* If your header has specific classes, target them */
-  .bg-slate-900 h1,
-  .header h1 {
-    text-align: center !important;
-    padding-left: 60px;
+
+  /* Main content area */
+  main {
+    @apply ml-0 w-full; /* Full width on mobile */
+  }
+
+  /* Header adjustments */
+  .header-container {
+    @apply fixed top-0 left-0 right-0 z-40;
+  }
+
+  /* Center header text properly */
+  .header-title {
+    @apply text-center mx-auto;
+    margin-left: 0 !important; /* Remove your previous 60px margin */
+    padding-left: 0 !important;
+  }
+}
+
+/* Ensure content doesn't get hidden under fixed header */
+@media (min-width: 768px) {
+  main {
+    @apply ml-80; /* Account for sidebar width */
   }
 }
