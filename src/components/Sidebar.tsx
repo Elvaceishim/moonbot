@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Globe, Clock, CheckCircle, AlertCircle, BarChart3, X } from 'lucide-react';
-import { NewsSource } from '../types/news';
+import { NewsSource, NewsArticle } from '../types/news';
 
 interface SidebarProps {
   sources: NewsSource[];
+  articles: NewsArticle[]; // <-- Add this line
   totalTweets: number;
   scheduledTweets: number;
   isMobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ 
-  sources, 
-  totalTweets, 
+export const Sidebar: React.FC<SidebarProps> = ({
+  sources,
+  articles, // <-- Add this line
+  totalTweets,
   scheduledTweets,
   isMobileMenuOpen,
   onCloseMobileMenu
