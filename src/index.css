@@ -1,29 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @media (max-width: 768px) {
-  /* Mobile header container */
-  .mobile-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px 60px 16px 60px; /* Space for hamburger on left */
-    position: relative;
+
+  .header-title,
+  h1,
+  [class*="text-"] {
+    text-align: center !important;
+    margin-left: 60px; /* Make room for hamburger */
+    margin-right: 20px;
   }
   
-  /* If your header is in a specific container */
-  header,
-  .header,
-  .bg-slate-900:first-child {
-    padding-left: 60px !important;
-    text-align: center;
-  }
-  
-  /* Center any header text */
-  header h1,
-  header .text-xl,
-  header .text-2xl,
-  .header h1,
-  .header .text-xl,
-  .header .text-2xl {
-    text-align: center;
-    margin: 0 auto;
+  /* If your header has specific classes, target them */
+  .bg-slate-900 h1,
+  .header h1 {
+    text-align: center !important;
+    padding-left: 60px;
   }
 }
