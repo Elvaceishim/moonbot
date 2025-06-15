@@ -171,13 +171,7 @@ function App() {
                 icon={Clock}
                 color="text-yellow-400"
               />
-              <StatsCard
-                title="Scheduled Tweets"
-                value={scheduledTweets.filter(t => t.status === 'scheduled').length}
-                icon={Twitter}
-                color="text-blue-400"
-                change={{ value: 5, trend: 'up' }}
-              />
+              
             </div>
 
             {/* Controls */}
