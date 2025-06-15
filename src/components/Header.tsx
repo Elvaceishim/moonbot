@@ -49,7 +49,9 @@ export const Header: React.FC<HeaderProps> = ({ totalArticles, isLive, isMobileM
               <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
               <span className="text-sm text-slate-300">{isLive ? 'Live' : 'Offline'}</span>
             </div>
+            <a href="https://twitter.com/tellaboutcrypt" target="_blank" rel="noopener noreferrer">
             <Twitter className="h-5 w-5 text-slate-400 hover:text-blue-400 cursor-pointer transition-colors" />
+            </a>
           </div>
         </div>
       </div>
