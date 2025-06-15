@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, Globe, Twitter, Zap } from 'lucide-react';
+import { Activity, Twitter, Zap } from 'lucide-react';
 
 interface HeaderProps {
   totalArticles: number;
