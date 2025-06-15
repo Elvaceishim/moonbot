@@ -63,10 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sources, totalTweets, schedule
       </div>
 
       <div className="mt-auto p-6 border-t border-slate-700">
-        <button className="w-full flex items-center justify-center space-x-2 bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-colors">
-          <Settings className="h-4 w-4" />
-          <span>Settings</span>
-        </button>
+      
       </div>
     </div>
   );
