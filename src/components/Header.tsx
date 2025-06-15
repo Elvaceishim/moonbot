@@ -27,12 +27,12 @@ export const Header: React.FC<HeaderProps> = ({ totalArticles, isLive }) => {
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <Activity className="h-4 w-4 text-green-400" />
-              <span className="text-sm text-slate-300">{totalArticles} articles</span>
+              
             </div>
             
             <div className="flex items-center space-x-2">
               <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`}></div>
-              
+              <span className="text-sm text-slate-300">{isLive ? 'Live' : 'Offline'}</span>
             </div>
 
             <div className="flex items-center space-x-3 text-slate-400">
