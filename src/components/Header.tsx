@@ -26,7 +26,6 @@ export const Header: React.FC<HeaderProps> = ({ totalArticles, isLive }) => {
 
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
-              <Activity className="h-4 w-4 text-green-400" />
               
             </div>
             
