@@ -21,3 +21,19 @@ export const NewsPage: React.FC = () => {
     </div>
   );
 };
+
+// Add this function to your main JavaScript file
+function hideDashboardOnMobile() {
+  if (window.innerWidth <= 768) {
+    const dashboard = document.querySelector('.dashboard') || 
+                     document.querySelector('#dashboard') ||
+                     document.querySelector('[class*="dashboard"]');
+    if (dashboard) {
+      dashboard.style.display = 'none';
+    }
+  }
+}
+
+// Call on page load and resize
+window.addEventListener('load', hideDashboardOnMobile);
+window.addEventListener('resize', hideDashboardOnMobile);
