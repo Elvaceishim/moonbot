@@ -103,12 +103,16 @@ function App() {
     setSelectedArticle(null);
   };
 
+
+
   const filteredArticles = articles.filter(article => {
     const matchesFilter = filter === 'all' || article.sentiment === filter;
     const matchesSearch = searchTerm === '' || 
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+      (article.keywords || []).some(keyword => 
+        keyword.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  
     return matchesFilter && matchesSearch;
   });
 
