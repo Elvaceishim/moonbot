@@ -253,3 +253,10 @@ function App() {
 }
 
 export default App;
+
+// When a tweet is posted, update its status:
+setScheduledTweets(prev =>
+  prev.map(t =>
+    t.id === postedTweetId ? { ...t, status: "posted" } : t
+  )
+);
