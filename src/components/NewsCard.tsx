@@ -109,7 +109,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
           </span>
 
          
-          </button>
+        
         </div>
       </div>
     </a>
