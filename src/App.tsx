@@ -107,6 +107,13 @@ function App() {
     setSelectedArticle(null);
   };
 
+  const markTweetAsPosted = (tweetId: string) => {
+    setScheduledTweets(prev =>
+      prev.map(t =>
+        t.id === tweetId ? { ...t, status: "posted" } : t
+      )
+    );
+  };
 
   const filteredArticles = articles.filter(article => {
     const matchesFilter = filter === 'all' || article.sentiment === filter;
@@ -253,10 +260,3 @@ function App() {
 }
 
 export default App;
-
-// When a tweet is posted, update its status:
-setScheduledTweets(prev =>
-  prev.map(t =>
-    t.id === postedTweetId ? { ...t, status: "posted" } : t
-  )
-);
