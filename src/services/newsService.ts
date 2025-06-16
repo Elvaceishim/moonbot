@@ -4,8 +4,7 @@ export class NewsService {
   static async fetchLatestNews(): Promise<NewsArticle[]> {
     const res = await fetch('/.netlify/functions/fetch-news');
     if (!res.ok) throw new Error('Failed to fetch news');
-    const data = await res.json();
-    return data.articles ?? [];
+    return await res.json();
   }
 
   // Optionally, provide static sources for your sidebar or UI
