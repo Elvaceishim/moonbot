@@ -124,6 +124,8 @@ function App() {
     ? Math.round(articles.reduce((sum, a) => sum + (a.relevanceScore || 0), 0) / articles.length)
     : 0;
 
+  const totalPostedTweets = scheduledTweets.filter(t => t.status === 'posted').length;
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
@@ -150,7 +152,7 @@ function App() {
         <Sidebar
           sources={sources}
           articles={articles}
-          totalTweets={scheduledTweets.filter(t => t.status === 'posted').length}
+          totalTweets={totalPostedTweets}
           scheduledTweets={scheduledTweets.filter(t => t.status === 'scheduled').length}
           isMobileMenuOpen={isMobileMenuOpen}
           onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
@@ -180,7 +182,12 @@ function App() {
                 icon={Clock}
                 color="text-yellow-400"
               />
-              
+              <StatsCard
+                title="Total Posts"
+                value={totalPostedTweets}
+                icon={Twitter}
+                color="text-blue-400"
+              />
             </div>
 
             {/* Controls */}
