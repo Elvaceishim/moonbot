@@ -43,9 +43,10 @@ function App() {
   const loadInitialData = async () => {
     setIsLoading(true);
     try {
-      const articles = (await NewsService.fetchLatestNews()).map(article => ({
+      const response = await NewsService.fetchLatestNews();
+      const articles = (response.articles ?? []).map(article => ({
         ...article,
-        sentiment: article.sentiment || 'neutral', // fallback if missing
+        sentiment: article.sentiment || 'neutral',
       }));
       
       const newsSources: NewsSource[] = [
