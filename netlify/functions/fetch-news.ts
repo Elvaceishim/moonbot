@@ -21,6 +21,17 @@ const sources = [
   }
 ];
 
+function calculateSentiment(text: string): 'bullish' | 'bearish' | 'neutral' {
+  const lower = text.toLowerCase();
+  if (lower.includes('gain') || lower.includes('surge') || lower.includes('rise') || lower.includes('bull')) {
+    return 'bullish';
+  }
+  if (lower.includes('loss') || lower.includes('crash') || lower.includes('fall') || lower.includes('bear')) {
+    return 'bearish';
+  }
+  return 'neutral';
+}
+
 export const handler: Handler = async () => {
   try {
     const allArticles: any[] = [];
@@ -35,7 +46,7 @@ export const handler: Handler = async () => {
         source: source.name,
         publishedAt: item.pubDate || new Date().toISOString(),
         imageUrl: '',
-        sentiment: 'neutral', // <-- Always set a default or calculated value
+        sentiment: calculateSentiment(item.title + ' ' + (item.contentSnippet || '')), // <-- Use real sentiment
         relevanceScore: 80,
         tweetText: '',
         hashtags: [],
