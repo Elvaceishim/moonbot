@@ -56,8 +56,9 @@ export const handler: Handler = async () => {
     }
     return {
       statusCode: 200,
-      body: JSON.stringify(allArticles)
-    };
+      body: JSON.stringify({ articles: allArticles })
+  };
+  
   } catch (error: any) {
     return {
       statusCode: 500,
