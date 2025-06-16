@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, ExternalLink, TrendingUp, TrendingDown, Minus, Twitter, Hash } from 'lucide-react';
+import { Clock, ExternalLink, Hash } from 'lucide-react';
 import { NewsArticle } from '../types/news';
 
 interface NewsCardProps {
@@ -24,8 +24,8 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
 
   const sentimentDisplay = {
     bullish: { icon: '📈', color: 'text-green-500' },
-    bearish: { icon: '📉', label: 'Bearish', color: 'text-red-500' },
-    neutral: { icon: '➖', label: 'Neutral', color: 'text-gray-400' },
+    bearish: { icon: '📉', color: 'text-red-500' },
+    neutral: { icon: '😐', color: 'text-yellow-500' }, // More visible!
   };
 
   return (
