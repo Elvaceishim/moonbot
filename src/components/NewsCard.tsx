@@ -22,26 +22,10 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
     }
   };
 
-  const getSentimentIcon = (sentiment: string) => {
-    switch (sentiment) {
-      case 'bullish':
-        return <TrendingUp className="h-4 w-4 text-green-400" />;
-      case 'bearish':
-        return <TrendingDown className="h-4 w-4 text-red-400" />;
-      default:
-        return <Minus className="h-4 w-4 text-slate-400" />;
-    }
-  };
-
-  const getSentimentColor = (sentiment: string) => {
-    switch (sentiment) {
-      case 'bullish':
-        return 'border-l-green-400 bg-green-400/5';
-      case 'bearish':
-        return 'border-l-red-400 bg-red-400/5';
-      default:
-        return 'border-l-slate-400 bg-slate-400/5';
-    }
+  const sentimentDisplay = {
+    bullish: { icon: '📈', label: 'Bullish', color: 'text-green-500' },
+    bearish: { icon: '📉', label: 'Bearish', color: 'text-red-500' },
+    neutral: { icon: '➖', label: 'Neutral', color: 'text-gray-400' },
   };
 
   return (
@@ -49,7 +33,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`block bg-slate-800 rounded-lg border-l-4 ${getSentimentColor(article.sentiment)} hover:bg-slate-700/50 transition-all duration-200 group`}
+      className={`block bg-slate-800 rounded-lg border-l-4 ${sentimentDisplay[article.sentiment].color} hover:bg-slate-700/50 transition-all duration-200 group`}
     >
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
@@ -63,7 +47,10 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
             </div>
           </div>
           <div className="flex items-center space-x-1">
-            {getSentimentIcon(article.sentiment)}
+            <span className={`flex items-center gap-1 font-semibold ${sentimentDisplay[article.sentiment].color}`}>
+              <span>{sentimentDisplay[article.sentiment].icon}</span>
+              <span>{sentimentDisplay[article.sentiment].label}</span>
+            </span>
             <span className="text-xs font-medium text-slate-300">
               {article.relevanceScore}%
             </span>
@@ -107,9 +94,6 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
             <ExternalLink className="h-4 w-4" />
             <span>Open</span>
           </span>
-
-         
-        
         </div>
       </div>
     </a>
