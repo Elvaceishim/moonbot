@@ -41,6 +41,7 @@ function App() {
   }, [isLive]);
 
   const loadInitialData = async () => {
+    setIsLoading(true);
     try {
       const articles = (await NewsService.fetchLatestNews()).map(article => ({
         ...article,
