@@ -108,15 +108,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
             <span>Open</span>
           </span>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault(); // prevent anchor navigation
-              onScheduleTweet?.(article);
-            }}
-            className="flex items-center space-x-1 text-slate-400 hover:text-blue-400 text-sm transition-colors bg-slate-700/50 hover:bg-blue-400/10 px-3 py-1 rounded-full"
-          >
-            <Twitter className="h-4 w-4" />
-            <span>Schedule Tweet</span>
+         
           </button>
         </div>
       </div>
