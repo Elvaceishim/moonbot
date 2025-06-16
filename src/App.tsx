@@ -152,7 +152,7 @@ function App() {
         <Sidebar
           sources={sources}
           articles={articles}
-          totalTweets={totalPostedTweets}
+          totalTweets={totalPostedTweets} // <-- This is the real posted count
           scheduledTweets={scheduledTweets.filter(t => t.status === 'scheduled').length}
           isMobileMenuOpen={isMobileMenuOpen}
           onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
@@ -181,13 +181,7 @@ function App() {
                 value={`${avgRelevance}%`}
                 icon={Clock}
                 color="text-yellow-400"
-              />
-              <StatsCard
-                title="Total Posts"
-                value={totalPostedTweets}
-                icon={Twitter}
-                color="text-blue-400"
-              />
+              />           
             </div>
 
             {/* Controls */}

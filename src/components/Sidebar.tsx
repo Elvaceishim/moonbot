@@ -108,7 +108,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <div className="mt-auto p-6 border-t border-slate-700">
-          {/* Footer content if needed */}
+          <ul className="text-sm">
+            <li className="flex items-center gap-2 text-slate-300">
+              <BarChart3 className="h-4 w-4 text-blue-400" />
+              <span>Total Posts:</span>
+              <span className="font-bold">{totalTweets}</span>
+            </li>
+          </ul>
         </div>
       </div>
     </>
