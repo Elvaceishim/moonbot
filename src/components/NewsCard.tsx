@@ -23,7 +23,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({ article, onScheduleTweet }) 
   };
 
   const sentimentDisplay = {
-    bullish: { icon: '📈', label: 'Bullish', color: 'text-green-500' },
+    bullish: { icon: '📈', label: , color: 'text-green-500' },
     bearish: { icon: '📉', label: 'Bearish', color: 'text-red-500' },
     neutral: { icon: '➖', label: 'Neutral', color: 'text-gray-400' },
   };
