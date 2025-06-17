@@ -3,5 +3,5 @@
   publish = "dist"
   command = "npm run build"
 
-[functions."post-news-schedule"]
-  schedule = "0 */2 * * *"
+#[functions."post-news-schedule"]
+#  schedule = "0 */2 * * *"
